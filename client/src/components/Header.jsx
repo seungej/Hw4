@@ -7,7 +7,7 @@ function Header() {
                 Restaurant Finder
             </h1>
         </div>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

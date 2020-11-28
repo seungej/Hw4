@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import UpdateRestaurant from "../components/UpdateRestaurant";
 
-function UpdatePage() {
+const UpdatePage = () => {
     return (
         <div>
-            Update
+            <h1 className="text-center">Update Restaurant</h1>
+            <UpdateRestaurant />
         </div>
-    )
-}
+    );
+};
 
-export default UpdatePage
+export default UpdatePage;
