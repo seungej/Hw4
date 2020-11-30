@@ -48,9 +48,9 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
     console.log(reviews);
 
     res.status(200).json({
-      status: "success",
+      status: "succes",
       data: {
-        restaurant: results.rows[0],
+        restaurant: restaurant.rows[0],
         reviews: reviews.rows,
       },
     });
@@ -71,7 +71,7 @@ app.post("/api/v1/restaurants", async (req, res) => {
     );
     console.log(results);
     res.status(201).json({
-      status: "success",
+      status: "succes",
       data: {
         restaurant: results.rows[0],
       },
@@ -91,9 +91,9 @@ app.put("/api/v1/restaurants/:id", async (req, res) => {
     );
 
     res.status(200).json({
-      status: "success",
+      status: "succes",
       data: {
-        restaurant: results.rows[0],
+        retaurant: results.rows[0],
       },
     });
   } catch (err) {
@@ -111,7 +111,7 @@ app.delete("/api/v1/restaurants/:id", async (req, res) => {
       req.params.id,
     ]);
     res.status(204).json({
-      status: "success",
+      status: "sucess",
     });
   } catch (err) {
     console.log(err);

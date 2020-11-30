@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import { RestaurantsContextProvider } from './context/RestaurantsContext';
 import Home from './routes/Home';
