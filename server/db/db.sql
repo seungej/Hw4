@@ -1,3 +1,6 @@
+/* create database booking;
+    \c booking; then copy whole sql.txt */
+
 CREATE TABLE reviews (
     id BIGSERIAL NOT NULL PRIMARY KEY,
     restaurant_id BIGINT NOT NULL REFERENCES restaurants(id),
