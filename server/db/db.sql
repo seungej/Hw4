@@ -153,3 +153,194 @@ CREATE TABLE seats (
         )
     )
 );
+
+/* INSERT VALUES */
+/*airport table */
+INSERT INTO airport
+VALUES (
+        'HOU',
+        'George Bush Airport',
+        'Houston',
+        NULL,
+        'CT'
+    );
+
+INSERT INTO airport
+VALUES (
+        'JFK',
+        'John F Kennedy Airport',
+        'New York',
+        NULL,
+        'ET'
+    );
+
+INSERT INTO airport
+VALUES (
+        'LAX',
+        'Los Angeles Airport',
+        'Los Angeles',
+        NULL,
+        'PT'
+    );
+
+INSERT INTO airport
+VALUES ('ORD', 'O Hare Airport', 'Chicago', NULL, 'CT');
+
+INSERT INTO airport
+VALUES ('MIA', 'Miami Airport', 'Miami', NULL, 'ET');
+
+/*aircraft*/
+INSERT INTO aircraft
+VALUES ('773', 'Boeing 777-300', 11100);
+
+INSERT INTO aircraft
+VALUES ('763', 'Boeing 767-300', 7900);
+
+INSERT INTO aircraft
+VALUES ('SU9', 'Boeing 777-300', 5700);
+
+INSERT INTO aircraft
+VALUES ('320', 'Boeing 777-300', 6400);
+
+INSERT INTO aircraft
+VALUES ('321', 'Boeing 777-300', 6100);
+
+/*flights table*/
+INSERT INTO flights
+VALUES (
+        1001,
+        'PG0010',
+        '2020-11-10 09:50:00+03',
+        '2020-11-10 14:55:00+03',
+        'HOU',
+        'JFK',
+        'Scheduled',
+        '773',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1002,
+        'PG0020',
+        '2020-11-11 09:50:00+03',
+        '2020-11-11 15:55:00+03',
+        'LAX',
+        'JFK',
+        'Scheduled',
+        '763',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1003,
+        'PG0030',
+        '2020-11-11 09:50:00+03',
+        '2020-11-11 16:55:00+03',
+        'ORD',
+        'MIA',
+        'Scheduled',
+        'SU9',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1004,
+        'PG0040',
+        '2020-11-12 09:50:00+03',
+        '2020-11-12 12:55:00+03',
+        'JFK',
+        'ORD',
+        'Scheduled',
+        '320',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1005,
+        'PG0050',
+        '2020-11-12 09:50:00+03',
+        '2020-11-12 12:55:00+03',
+        'MIA',
+        'LAX',
+        'Scheduled',
+        '321',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1006,
+        'PG0060',
+        '2020-11-13 09:50:00+03',
+        '2020-11-13 12:55:00+03',
+        'JFK',
+        'HOU',
+        'Scheduled',
+        '773',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1007,
+        'PG0070',
+        '2020-11-14 09:50:00+03',
+        '2020-11-14 12:55:00+03',
+        'JFK',
+        'LAX',
+        'Scheduled',
+        '763',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1008,
+        'PG0080',
+        '2020-11-14 09:50:00+03',
+        '2020-11-14 16:55:00+03',
+        'MIA',
+        'ORD',
+        'Scheduled',
+        'SU9',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1009,
+        'PG0090',
+        '2020-11-15 09:50:00+03',
+        '2020-11-15 12:55:00+03',
+        'ORD',
+        'JFK',
+        'Scheduled',
+        '320',
+        50,
+        0
+    );
+
+INSERT INTO flights
+VALUES (
+        1010,
+        'PG0100',
+        '2020-11-12 09:50:00+03',
+        '2020-11-12 12:55:00+03',
+        'LAX',
+        'MIA',
+        'Scheduled',
+        '321',
+        50,
+        0);
