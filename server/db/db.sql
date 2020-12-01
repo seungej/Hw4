@@ -1,5 +1,6 @@
 /* create database booking;
     \c booking; then copy whole sql.txt */
+BEGIN;
 
 CREATE TABLE reviews (
     id BIGSERIAL NOT NULL PRIMARY KEY,
@@ -344,3 +345,5 @@ VALUES (
         '321',
         50,
         0);
+		
+COMMIT;
