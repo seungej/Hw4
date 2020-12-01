@@ -1,14 +1,14 @@
 import React from "react";
-import AddRestaurant from "../components/AddRestaurant";
+import AddAirline from "../components/AddAirline";
 import Header from "../components/Header";
-import RestaurantList from "../components/RestaurantList";
+import AirlineList from "../components/AirlineList";
 
 const Home = () => {
     return (
         <div>
             <Header />
-            <AddRestaurant />
-            <RestaurantList />
+            <AddAirline />
+            <AirlineList />
         </div>
     );
 };

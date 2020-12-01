@@ -1,23 +1,21 @@
 import React, { useState, useContext } from "react";
-import RestaurantFinder from "../apis/RestaurantFinder";
-import { RestaurantsContext } from "../context/RestaurantsContext";
+import AirportFinder from "../apis/AirportFinder";
+import { AirlineContext } from "../context/AirlineContext";
 
-const AddRestaurant = () => {
-  const { addRestaurants } = useContext(RestaurantsContext);
+const AddAirline = () => {
+  const { addAirline } = useContext(AirlineContext);
   const [departure_airport, setDepartureAirport] = useState("");
-  const [location, setLocation] = useState("");
-  const [priceRange, setPriceRange] = useState("Price Range");
+  const [arrival_airport, setArrivalAirport] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await RestaurantFinder.post("/", {
+      const response = await AirportFinder.post("/", {
         departure_airport,
-        location,
-        price_range: priceRange,
+        arrival_airport,
       });
       console.log(response.data.data);
-      addRestaurants(response.data.data.restaurant);
+      addAirline(response.data.data.airline);
     } catch (err) {
       console.log(err);
     }
@@ -37,33 +35,19 @@ const AddRestaurant = () => {
           </div>
           <div className="col">
             <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              value={arrival_airport}
+              onChange={(e) => setArrivalAirport(e.target.value)}
               className="form-control"
               type="text"
-              placeholder="location"
+              placeholder="arrival_airport"
             />
-          </div>
-          <div className="col">
-            <select
-              value={priceRange}
-              onChange={(e) => setPriceRange(e.target.value)}
-              className="custom-select my-1 mr-sm-2"
-            >
-              <option disabled>Price Range</option>
-              <option value="1">$</option>
-              <option value="2">$$</option>
-              <option value="3">$$$</option>
-              <option value="4">$$$$</option>
-              <option value="5">$$$$$</option>
-            </select>
           </div>
           <button
             onClick={handleSubmit}
             type="submit"
             className="btn btn-primary"
           >
-            Add
+            Search
           </button>
         </div>
       </form>
@@ -71,4 +55,4 @@ const AddRestaurant = () => {
   );
 };
 
-export default AddRestaurant;
+export default AddAirline;

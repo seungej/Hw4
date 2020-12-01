@@ -1,22 +1,22 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { RestaurantsContext } from "../context/RestaurantsContext";
-import RestaurantFinder from "../apis/RestaurantFinder";
+import { AirlineContext } from "../context/AirlineContext";
+import AirportFinder from "../apis/AirportFinder";
 import StarRating from "../components/StarRating";
 import Reviews from "../components/Reviews";
 import AddReview from "../components/AddReview";
 
-const RestaurantDetailPage = () => {
+const AirlineDetailPage = () => {
     const { id } = useParams();
-    const { selectedRestaurant, setSelectedRestaurant } = useContext(RestaurantsContext);
+    const { selectedAirline, setSelectedAirline } = useContext(AirlineContext);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await RestaurantFinder.get(`/${id}`);
+                const response = await AirportFinder.get(`/${id}`);
 				console.log(response);
-				
-                setSelectedRestaurant(response.data.data);
+
+                setSelectedAirline(response.data.data);
             } catch (err) {
                 console.log(err);
             }
@@ -25,21 +25,21 @@ const RestaurantDetailPage = () => {
     }, []);
     return (
         <div>
-            {selectedRestaurant && (
+            {selectedAirline && (
             <>
                 <h1 className="text-center display-1">
-                    {selectedRestaurant.restaurant.name}
+                    {selectedAirline.airline.name}
                 </h1>
                 <div className="text-center">
-                    <StarRating rating={selectedRestaurant.restaurant.average_rating} />
+                    <StarRating rating={selectedAirline.airline.average_rating} />
                     <span className="text-warning ml-1">
-                        {selectedRestaurant.restaurant.count
-                        ? `(${selectedRestaurant.restaurant.count})`
+                        {selectedAirline.airline.count
+                        ? `(${selectedAirline.airline.count})`
                         : "(0)"}
                     </span>
                 </div>
                 <div className="mt-3">
-                    <Reviews reviews={selectedRestaurant.reviews} />
+                    <Reviews reviews={selectedAirline.reviews} />
                 </div>
                 <AddReview />
             </>
@@ -48,4 +48,4 @@ const RestaurantDetailPage = () => {
     );
 };
 
-export default RestaurantDetailPage;
+export default AirlineDetailPage;

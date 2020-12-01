@@ -1,23 +1,23 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { RestaurantsContext } from "../context/RestaurantsContext";
-import RestaurantFinder from "../apis/RestaurantFinder";
+import { AirlineContext } from "../context/AirlineContext";
+import AirportFinder from "../apis/AirportFinder";
 
-const UpdateRestaurant = (props) => {
+const UpdateAirline = (props) => {
     const { id } = useParams();
     let history = useHistory();
-    const { restaurants } = useContext(RestaurantsContext);
+    const { airline } = useContext(AirlineContext);
     const [name, setName] = useState("");
     const [location, setLocation] = useState("");
     const [priceRange, setPriceRange] = useState("");
 
     useEffect(() => {
     const fetchData = async () => {
-        const response = await RestaurantFinder.get(`/${id}`);
+        const response = await AirportFinder.get(`/${id}`);
         console.log(response.data.data);
-        setName(response.data.data.restaurant.name);
-        setLocation(response.data.data.restaurant.location);
-        setPriceRange(response.data.data.restaurant.price_range);
+        setName(response.data.data.airline.name);
+        setLocation(response.data.data.airline.location);
+        setPriceRange(response.data.data.airline.price_range);
     };
 
     fetchData();
@@ -25,7 +25,7 @@ const UpdateRestaurant = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const updatedRestaurant = await RestaurantFinder.put(`/${id}`, {
+        const UpdateAirline = await AirportFinder.put(`/${id}`, {
             name,
             location,
             price_range: priceRange,
@@ -79,4 +79,4 @@ const UpdateRestaurant = (props) => {
     );
 };
 
-export default UpdateRestaurant;
+export default UpdateAirline;
