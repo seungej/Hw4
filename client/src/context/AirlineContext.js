@@ -3,7 +3,7 @@ import React, { useState, createContext } from "react";
 export const AirlineContext = createContext();
 
 export const AirlineContextProvider = (props) => {
-    const [airline, setAirline] = useState([]);
+    const [airlines, setAirline] = useState([]);
     const [selectedAirline, setSelectedAirline] = useState(null);
 
     const addAirline = (airline) => {
@@ -12,7 +12,7 @@ export const AirlineContextProvider = (props) => {
     return (
         <AirlineContext.Provider
             value={{
-                airline,
+                airlines,
                 setAirline,
                 addAirline,
                 selectedAirline,
