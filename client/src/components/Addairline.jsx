@@ -4,7 +4,7 @@ import { RestaurantsContext } from "../context/RestaurantsContext";
 
 const AddRestaurant = () => {
   const { addRestaurants } = useContext(RestaurantsContext);
-  const [name, setName] = useState("");
+  const [departure_airport, setDepartureAirport] = useState("");
   const [location, setLocation] = useState("");
   const [priceRange, setPriceRange] = useState("Price Range");
 
@@ -12,7 +12,7 @@ const AddRestaurant = () => {
     e.preventDefault();
     try {
       const response = await RestaurantFinder.post("/", {
-        name,
+        departure_airport,
         location,
         price_range: priceRange,
       });
@@ -28,11 +28,11 @@ const AddRestaurant = () => {
         <div className="form-row">
           <div className="col">
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={departure_airport}
+              onChange={(e) => setDepartureAirport(e.target.value)}
               type="text"
               className="form-control"
-              placeholder="name"
+              placeholder="departure_airport"
             />
           </div>
           <div className="col">
