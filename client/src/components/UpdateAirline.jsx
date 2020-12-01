@@ -7,17 +7,15 @@ const UpdateAirline = (props) => {
     const { id } = useParams();
     let history = useHistory();
     const { airline } = useContext(AirlineContext);
-    const [name, setName] = useState("");
-    const [location, setLocation] = useState("");
-    const [priceRange, setPriceRange] = useState("");
+    const [departure_airport, setDepartureAirport] = useState("");
+    const [arrival_airport, setArrivalAirport] = useState("");
 
     useEffect(() => {
     const fetchData = async () => {
         const response = await AirportFinder.get(`/${id}`);
         console.log(response.data.data);
-        setName(response.data.data.airline.name);
-        setLocation(response.data.data.airline.location);
-        setPriceRange(response.data.data.airline.price_range);
+        setDepartureAirport(response.data.data.airline.name);
+        setArrivalAirport(response.data.data.airline.location);
     };
 
     fetchData();
@@ -26,9 +24,8 @@ const UpdateAirline = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const UpdateAirline = await AirportFinder.put(`/${id}`, {
-            name,
-            location,
-            price_range: priceRange,
+            departure_airport,
+            arrival_airport,
         });
         history.push("/");
     };
@@ -37,34 +34,24 @@ const UpdateAirline = (props) => {
     <div>
         <form action="">
             <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label htmlFor="departure_airport">departure_airport</label>
                 <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    id="name"
+                    value={departure_airport}
+                    onChange={(e) => setDepartureAirport(e.target.value)}
+                    id="departure_airport"
                     className="form-control"
                     type="text"
                 />
             </div>
 
             <div className="form-group">
-                <label htmlFor="location">Location</label>
+                <label htmlFor="arrival_airport">arrival_airport</label>
                 <input
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    id="location"
+                    value={arrival_airport}
+                    onChange={(e) => setArrivalAirport(e.target.value)}
+                    id="arrival_airport"
                     className="form-control"
                     type="text"
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="price_range">Price Range</label>
-                <input
-                    value={priceRange}
-                    onChange={(e) => setPriceRange(e.target.value)}
-                    id="price_range"
-                    className="form-control"
-                    type="number"
                 />
             </div>
             <button
