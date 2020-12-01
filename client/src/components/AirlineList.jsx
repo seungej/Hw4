@@ -75,9 +75,8 @@ const AirlineList = (props) => {
                   onClick={() => handleAirlineSelect(airline.id)}
                   key={airline.id}
                 >
-                  <td>{airline.name}</td>
-                  <td>{airline.location}</td>
-                  <td>{"$".repeat(airline.price_range)}</td>
+                  <td>{airline.departure_airport}</td>
+                  <td>{airline.arrival_airport}</td>
                   <td>{renderRating(airline)}</td>
                   <td>
                     <button
