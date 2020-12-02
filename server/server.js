@@ -9,10 +9,28 @@ app.use(cors());
 app.use(express.json());
 
 
+/*app.get("/api/v1/airlines", async (req, res) => {
+  try {
+    const MakeAirlineTable = await db.query(
+      "select * from flights;"
+    );
+
+    res.status(200).json({
+      status: "success",
+      results: MakeAirlineTable.rows.length,
+      data: {
+        airlines: MakeAirlineTable.rows,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});*/
+
 app.get("/api/v1/airlines", async (req, res) => {
   try {
     const airlineRatingsData = await db.query(
-      "select * from airlines left join (select airlines_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by airline_id) reviews on airlines.id = reviews.airline_id;"
+      "select * from airlines left join (select airlines_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by airline_id) reviews on airlines.id = reviews.airline_id"
     );
 
     res.status(200).json({

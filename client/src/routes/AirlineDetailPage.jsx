@@ -41,7 +41,7 @@ const AirlineDetailPage = () => {
                 <div className="mt-3">
                     <Reviews reviews={selectedAirline.reviews} />
                 </div>
-                <AddReview />
+                //<AddReview />
             </>
         )}
     </div>
