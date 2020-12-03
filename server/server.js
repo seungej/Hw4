@@ -16,8 +16,6 @@ app.get("/api/v1/airlines", async (req, res) => {
       "select * from flights;"
     );
 
-	//const airlineTable = JSON.stringify(MakeAirlineTable);
-
     res.status(200).json({
       status: "success",
       results: MakeAirlineTable.rows.length,
