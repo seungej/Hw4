@@ -8,11 +8,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
+		//when a "GET" request is made to the homepage ( /api/v1/airlines )
+		//run a query and save as json data, and print status
 app.get("/api/v1/airlines", async (req, res) => {
   try {
+    const MakeAirlineTable = await db.query(
+      "select * from flights;"
+    );
+
+    res.status(200).json({
+      status: "success",
+      results: MakeAirlineTable.rows.length,
+      data: {
+        airlines: MakeAirlineTable.rows,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+/*app.get("/api/v1/airlines", async (req, res) => {
+  try {
     const airlineRatingsData = await db.query(
-      "select * from airlines left join (select airlines_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by airline_id) reviews on airlines.id = reviews.airline_id;"
+      "select * from airlines left join (select airlines_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by airline_id) reviews on airlines.id = reviews.airline_id"
     );
 
     res.status(200).json({
@@ -25,14 +44,14 @@ app.get("/api/v1/airlines", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+});*/
 
-app.get("/api/v1/airlines/:id", async (req, res) => {
+/*app.get("/api/v1/airlines/:id", async (req, res) => {
   console.log(req.params.id);
 
   try {
     const airline = await db.query(
-      "select * from airlines left join (select airline_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by airline_id) reviews on airlines.id = reviews.airline_id where id = $1",
+      "select * from flights left join (select airline_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by airline_id) reviews on airlines.id = reviews.airline_id where id = $1",
       [req.params.id]
     );
 
@@ -52,16 +71,16 @@ app.get("/api/v1/airlines/:id", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+});*/
 
 // Create a airline
 
-app.post("/api/v1/airlines", async (req, res) => {
+/*app.post("/api/v1/airlines", async (req, res) => {
   console.log(req.body);
 
   try {
     const results = await db.query(
-      "INSERT INTO airlines (name, location, price_range) values ($1, $2, $3) returning *",
+      "INSERT INTO flights (name, location, price_range) values ($1, $2, $3) returning *",
       [req.body.name, req.body.location, req.body.price_range]
     );
     console.log(results);
@@ -74,14 +93,14 @@ app.post("/api/v1/airlines", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+});*/
 
 // Update airline
 
-app.put("/api/v1/airlines/:id", async (req, res) => {
+/*app.put("/api/v1/airlines/:id", async (req, res) => {
   try {
     const results = await db.query(
-      "UPDATE airlines SET name = $1, location = $2, price_range = $3 where id = $4 returning *",
+      "UPDATE flights SET name = $1, location = $2, price_range = $3 where id = $4 returning *",
       [req.body.name, req.body.location, req.body.price_range, req.params.id]
     );
 
@@ -96,13 +115,13 @@ app.put("/api/v1/airlines/:id", async (req, res) => {
   }
   console.log(req.params.id);
   console.log(req.body);
-});
+});*/
 
 // Delete airline
 
-app.delete("/api/v1/airlines/:id", async (req, res) => {
+/*app.delete("/api/v1/airlines/:id", async (req, res) => {
   try {
-    const results = db.query("DELETE FROM airlines where id = $1", [
+    const results = db.query("DELETE FROM flights where id = $1", [
       req.params.id,
     ]);
     res.status(204).json({
@@ -111,9 +130,9 @@ app.delete("/api/v1/airlines/:id", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+});*/
 
-app.post("/api/v1/airlines/:id/addReview", async (req, res) => {
+/*app.post("/api/v1/airlines/:id/addReview", async (req, res) => {
   try {
     const newReview = await db.query(
       "INSERT INTO reviews (airline_id, name, review, rating) values ($1, $2, $3, $4) returning *;",
@@ -129,7 +148,7 @@ app.post("/api/v1/airlines/:id/addReview", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-});
+});*/
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

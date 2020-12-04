@@ -67,7 +67,7 @@ const AirlineList = (props) => {
             <th scope="col">Book</th>
           </tr>
         </thead>
-        <tbody>
+        {/*<tbody>
           {airlines &&
             airlines.map((airline) => {
               return (
@@ -97,7 +97,7 @@ const AirlineList = (props) => {
                 </tr>
               );
             })}
-        </tbody>
+        </tbody>*/}
       </table>
     </div>
   );

@@ -1,25 +1,47 @@
 /* create database booking;
     \c booking; then copy whole sql.txt */
+BEGIN;
 
-DROP TABLE IF EXISTS airport CASCADE;
+CREATE TABLE reviews (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    restaurant_id BIGINT NOT NULL REFERENCES restaurants(id),
+    name VARCHAR(50) NOT NULL,
+    review TEXT NOT NULL,
+    rating INT NOT NULL check(
+        rating >= 1
+        and rating <= 5
+    )
+);
+select *
+from restaurants
+    left join(
+        select restaurant_id,
+            count(*),
+            TRUNC(AVG(rating, 1)) as average_rating
+        from reviews
+        group by restaurant_id
+    ) reviews on restaurants.id = reviews.restaurant_id;
 
-DROP TABLE IF EXISTS boarding_passes CASCADE;
+CREATE TABLE reviews (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    restaurant_id BIGINT NOT NULL REFERENCES restaurants(id),
+    name VARCHAR(50) NOT NULL,
+    review TEXT NOT NULL,
+    rating INT NOT NULL check(
+        rating >= 1
+        and rating <= 5
+    )
+);
+select *
+from restaurants
+    left join(
+        select restaurant_id,
+            count(*),
+            TRUNC(AVG(rating, 1)) as average_rating
+        from reviews
+        group by restaurant_id
+    ) reviews on restaurants.id = reviews.restaurant_id;
 
-DROP TABLE IF EXISTS seats CASCADE;
-
-DROP TABLE IF EXISTS aircraft CASCADE;
-
-DROP TABLE IF EXISTS ticket CASCADE;
-
-DROP TABLE IF EXISTS ticket_flights CASCADE;
-
-DROP TABLE IF EXISTS bookings CASCADE;
-
-DROP TABLE IF EXISTS flights CASCADE;
-
-DROP TABLE IF EXISTS aircraft CASCADE;
-
-/*create tables*/
 CREATE TABLE aircraft(
     aircraft_code char(3),
     model char(25),
@@ -28,7 +50,7 @@ CREATE TABLE aircraft(
     CONSTRAINT "flights_aircraft_code_fkey" FOREIGN KEY (aircraft_code) REFERENCES aircraft(aircraft_code),
     CONSTRAINT "seats_aircraft_code_fkey" FOREIGN KEY (aircraft_code) REFERENCES aircraft(aircraft_code) ON DELETE CASCADE
 );
-
+	
 CREATE TABLE airport (
     airport_code char(3) NOT NULL,
     airport_name char(40),
@@ -116,15 +138,6 @@ CREATE TABLE ticket_flights (
             )
         )
     )
-);
-
-CREATE TABLE boarding_passes (
-    ticket_no character(13) NOT NULL,
-    flight_id integer NOT NULL,
-    boarding_no integer NOT NULL,
-    seat_no character varying(4) NOT NULL,
-    PRIMARY KEY(ticket_no, flight_id),
-    CONSTRAINT boarding_passes_ticket_no_fkey FOREIGN KEY (ticket_no, flight_id) REFERENCES ticket_flights(ticket_no, flight_id)
 );
 
 CREATE TABLE seats (
@@ -332,3 +345,5 @@ VALUES (
         '321',
         50,
         0);
+		
+COMMIT;
