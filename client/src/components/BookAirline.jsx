@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, Fragment } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { AirlineContext } from "../context/AirlineContext";
 import AirportFinder from "../apis/AirportFinder";
@@ -26,7 +26,8 @@ function makeBook_ref(length) {
 const BookAirline = (props) => {
     const { id } = useParams();
     let history = useHistory();
-    const { airline } = useContext(AirlineContext);
+    //const { airline } = useContext(AirlineContext);
+	const {airlines, setAirline} = useContext(AirlineContext);
     const [Name, setName] = useState("");
     const [Address, setAddress] = useState("");
     const [Credit_Card, setCreditCard] = useState("");
@@ -37,6 +38,7 @@ const BookAirline = (props) => {
     const fetchData = async () => {
         const response = await AirportFinder.get(`/${id}`);
         console.log(response.data.data);
+		setAirline(response.data.data.airlines);
     };
 
     fetchData();
@@ -54,6 +56,35 @@ const BookAirline = (props) => {
     };
 
     return (
+	<fragment>
+		<div className="list-group">
+			<table className="table table-hover table-dark">
+			  <thead>
+				<tr className="bg-secondary">
+					<th scope="col">Flight#</th>
+					<th scope="col">From</th>
+					<th scope="col">To</th>
+					<th scope="col">Departure</th>
+					<th scope="col">Arrival</th>
+					<th scope="col">Seats Available</th>
+				</tr>
+			  </thead>
+				<tbody>
+					{airlines && airlines.map((airline) => {
+						return(
+						<tr key={airline.flight_id}>
+							<td>{airline.flight_no}</td>
+							<td>{airline.departure_airport}</td>
+							<td>{airline.arrival_airport}</td>
+							<td>{airline.scheduled_departure}</td>
+							<td>{airline.scheduled_arrival}</td>
+							<td>{airline.seats_available}</td>
+						</tr>
+						);
+					})}
+				</tbody>
+			</table>
+		</div>
     <div>
         <form action="">
             <div className="form-group">
@@ -120,6 +151,7 @@ const BookAirline = (props) => {
             </button>
         </form>
     </div>
+	</fragment>
     );
 };
 
