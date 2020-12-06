@@ -1,9 +1,12 @@
 import React, {useEffect, useContext} from 'react'
 import AirportFinder from "../apis/AirportFinder";
 import { AirlineContext } from "../context/AirlineContext";
+import { useHistory } from "react-router-dom";
+import { withRouter } from 'react-router'
 
 const AirlineTable = (props) => {
 	const {airlines, setAirline} = useContext(AirlineContext);
+	const history = useHistory();
 	useEffect(() => {
 		const fetchTableData = async() => {
 			try{
@@ -14,7 +17,12 @@ const AirlineTable = (props) => {
 		
 		fetchTableData();
 	},[]);
-	
+
+	const handleBooking = (e, id) => {
+		e.stopPropagation();
+		history.push(`/airlines/${id}/booking`);
+	};
+
 	return(
 		<div className="list-group">
 			<table className="table table-hover table-dark">
@@ -40,7 +48,10 @@ const AirlineTable = (props) => {
 							<td>{airline.scheduled_arrival}</td>
 							<td>{airline.seats_available}</td>
 							<td>
-							    <button className="btn btn-secondary">
+							    <button
+								onClick={(e)=> handleBooking(e, airline.flight_id)}
+								className="btn btn-secondary"
+								>
 								Book
 								</button>
 							</td>
@@ -53,4 +64,4 @@ const AirlineTable = (props) => {
 	);
 };
 
-export default AirlineTable;
+export default withRouter(AirlineTable);
