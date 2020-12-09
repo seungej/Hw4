@@ -46,32 +46,26 @@ app.get("/api/v1/airlines", async (req, res) => {
   }
 });*/
 
-/*app.get("/api/v1/airlines/:id", async (req, res) => {
+app.get("/api/v1/airlines/:id", async (req, res) => {
   console.log(req.params.id);
 
   try {
-    const airline = await db.query(
-      "select * from flights left join (select airline_id, COUNT(*), TRUNC(AVG(rating),1) as average_rating from reviews group by airline_id) reviews on airlines.id = reviews.airline_id where id = $1",
+    const selectFlight = await db.query(
+      "select * from flights where flight_id = $1",
       [req.params.id]
     );
-
-    const reviews = await db.query(
-      "select * from reviews where airline_id = $1",
-      [req.params.id]
-    );
-    console.log(reviews);
+    console.log(selectFlight);
 
     res.status(200).json({
       status: "success",
       data: {
-        airline: airline.rows[0],
-        reviews: reviews.rows,
+        airlines: selectFlight.rows,
       },
     });
   } catch (err) {
     console.log(err);
   }
-});*/
+});
 
 // Create a airline
 
@@ -97,17 +91,30 @@ app.get("/api/v1/airlines", async (req, res) => {
 
 // Update airline
 
-/*app.put("/api/v1/airlines/:id", async (req, res) => {
+app.put("/api/v1/airlines/:id", async (req, res) => {
   try {
-    const results = await db.query(
-      "UPDATE flights SET name = $1, location = $2, price_range = $3 where id = $4 returning *",
-      [req.body.name, req.body.location, req.body.price_range, req.params.id]
+    const InsertIntoTicket = await db.query(
+    //  "INSERT INTO ticket SET ticket_no = $1, book_ref = $2, passenger_id = $3, passenger_name = $4, email = $5, phone = $6, address = $7, credit_card = $8",
+	"INSERT INTO ticket VALUES($1, $2, $3, $4, $5, $6, $7, $8)",
+      [req.body.ticket_no, req.body.book_ref, req.body.passenger_id, req.body.Name, req.body.Email, req.body.Phone, req.body.Address, req.body.Credit_Card]
     );
+	
+    const InsertIntoBookings = await db.query(	
+		"INSERT INTO bookings VALUES($1, NULL, 0)",
+		[req.body.book_ref]
+	);
+	
+	const UpdateFlights = await db.query(
+		"UPDATE flights SET seats_available=seats_available-1, seats_booked=seats_booked+1 WHERE flight_id = $1",
+		[req.params.id]
+	);
 
     res.status(200).json({
       status: "success",
       data: {
-        airline: results.rows[0],
+        ticketResponse: InsertIntoTicket.rows[0],
+		bookingsResponse: InsertIntoBookings.rows[0],
+		flightsResponse: UpdateFlights.rows[0],
       },
     });
   } catch (err) {
@@ -115,7 +122,7 @@ app.get("/api/v1/airlines", async (req, res) => {
   }
   console.log(req.params.id);
   console.log(req.body);
-});*/
+});
 
 // Delete airline
 
