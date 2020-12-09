@@ -2,46 +2,6 @@
     \c booking; then copy whole sql.txt */
 BEGIN;
 
-CREATE TABLE reviews (
-    id BIGSERIAL NOT NULL PRIMARY KEY,
-    restaurant_id BIGINT NOT NULL REFERENCES restaurants(id),
-    name VARCHAR(50) NOT NULL,
-    review TEXT NOT NULL,
-    rating INT NOT NULL check(
-        rating >= 1
-        and rating <= 5
-    )
-);
-select *
-from restaurants
-    left join(
-        select restaurant_id,
-            count(*),
-            TRUNC(AVG(rating, 1)) as average_rating
-        from reviews
-        group by restaurant_id
-    ) reviews on restaurants.id = reviews.restaurant_id;
-
-CREATE TABLE reviews (
-    id BIGSERIAL NOT NULL PRIMARY KEY,
-    restaurant_id BIGINT NOT NULL REFERENCES restaurants(id),
-    name VARCHAR(50) NOT NULL,
-    review TEXT NOT NULL,
-    rating INT NOT NULL check(
-        rating >= 1
-        and rating <= 5
-    )
-);
-select *
-from restaurants
-    left join(
-        select restaurant_id,
-            count(*),
-            TRUNC(AVG(rating, 1)) as average_rating
-        from reviews
-        group by restaurant_id
-    ) reviews on restaurants.id = reviews.restaurant_id;
-
 CREATE TABLE aircraft(
     aircraft_code char(3),
     model char(25),
@@ -106,7 +66,7 @@ CREATE TABLE flights (
 
 CREATE TABLE bookings (
     book_ref character(6) NOT NULL,
-    book_date timestamp WITH time zone NOT NULL,
+    book_date timestamp WITH time zone,
     total_amount numeric(10, 2) NOT NULL,
     PRIMARY KEY(book_ref)
 );
@@ -118,6 +78,8 @@ CREATE TABLE ticket(
     passenger_name text NOT NULL,
     email char(50),
     phone char(15),
+	address text,
+	credit_card text,
     PRIMARY KEY (ticket_no),
     CONSTRAINT "tickets_book_ref_fkey" FOREIGN KEY (book_ref) REFERENCES bookings(book_ref)
 );
@@ -140,20 +102,7 @@ CREATE TABLE ticket_flights (
     )
 );
 
-CREATE TABLE seats (
-    aircraft_code character(3) NOT NULL,
-    seat_no character varying(4) NOT NULL,
-    fare_conditions character varying(10) NOT NULL,
-    PRIMARY KEY (aircraft_code, seat_no),
-    CONSTRAINT seats_aircraft_code_fkey FOREIGN KEY (aircraft_code) REFERENCES aircraft(aircraft_code) ON DELETE CASCADE,
-    CONSTRAINT seats_fare_conditions_check CHECK (
-        (
-            (fare_conditions)::text = ANY (
-                ARRAY [('Economy'::character varying)::text, ('Comfort'::character varying)::text, ('Business'::character varying)::text]
-            )
-        )
-    )
-);
+
 
 /* INSERT VALUES */
 /*airport table */
